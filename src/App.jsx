@@ -4,7 +4,7 @@ function App() {
     return (
         <div className="admin-container">
 
-            {/* Header Area */}
+            {/* header area */}
             <header className="header">
                 <h1 className="welcome-text">Admin Dashboard</h1>
                 <button className="profile-button">
@@ -12,13 +12,13 @@ function App() {
                 </button>
             </header>
 
-            {/* Warning Banner */}
+            {/* warning banner */}
             <div className="waiting-banner">
                 <span className="waiting-text">3 users waiting for approval</span>
                 <button className="review-btn">Review</button>
             </div>
 
-            {/* Summary Cards */}
+            {/* summary cards */}
             <div className="row">
                 <div className="summary-card">
                     <div>Total Desks</div>
@@ -30,7 +30,7 @@ function App() {
                 </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* action buttons */}
             <div className="row">
                 <button className="manage-button"><span className="manage-text">Manage Desks</span></button>
                 <button className="manage-button"><span className="manage-text">Manage Users</span></button>

@@ -1,5 +1,5 @@
 :root {
-    /* SmartRise Brand Colors */
+    /* SmartRise colors */
     --primary-blue: #2563eb;
     --primary-blue-light: #dbeafe;
     --warning-bg: #fff7ed;
@@ -7,14 +7,14 @@
     --danger-text: #b91c1c;
     --danger-border: #fecaca;
     --border-gray: #ccc;
-    /* Global UI Settings */
-    --border-radius-main: 8px; /* Based on their borderRadius: 8 */
-    --bg-color: #f8fafc; /* A soft off-white for the web background */
+    /* global UI settings */
+    --border-radius-main: 8px; 
+    --bg-color: #f8fafc; 
 }
 
 body {
     background-color: var(--bg-color);
     font-family: system-ui, -apple-system, sans-serif;
     margin: 0;
-    padding: 24px; /* Based on their container padding: 24 */
+    padding: 24px; 
 }

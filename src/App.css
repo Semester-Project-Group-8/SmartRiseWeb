@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 500px; /* Keeps it looking like a clean app on wide web screens */
+    max-width: 500px; 
     margin: 0 auto;
 }
 
@@ -70,7 +70,7 @@
 
 .waiting-text {
     font-weight: 600;
-    color: #9a3412; /* Dark orange for readability */
+    color: #9a3412; 
 }
 
 .review-btn {
