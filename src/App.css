@@ -1,0 +1,125 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px; /* Keeps it looking like a clean app on wide web screens */
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.welcome-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.profile-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: var(--primary-blue-light);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-letter {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-blue);
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.summary-card {
+    flex: 1;
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius-main);
+    background-color: #fff;
+    padding: 12px;
+}
+
+.summary-number {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.waiting-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--warning-border);
+    background-color: var(--warning-bg);
+    border-radius: var(--border-radius-main);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.waiting-text {
+    font-weight: 600;
+    color: #9a3412; /* Dark orange for readability */
+}
+
+.review-btn {
+    background: none;
+    border: none;
+    color: #9a3412;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.manage-button {
+    flex: 1;
+    height: 70px;
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius-main);
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.manage-text {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.lift-button {
+    height: 60px;
+    background-color: var(--primary-blue);
+    border: none;
+    border-radius: var(--border-radius-main);
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+.lift-text {
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.logout-button {
+    height: 50px;
+    border: 1px solid var(--danger-border);
+    background-color: transparent;
+    border-radius: var(--border-radius-main);
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.logout-text {
+    color: var(--danger-text);
+    font-weight: 600;
+}

@@ -1,0 +1,20 @@
+:root {
+    /* SmartRise Brand Colors */
+    --primary-blue: #2563eb;
+    --primary-blue-light: #dbeafe;
+    --warning-bg: #fff7ed;
+    --warning-border: #fed7aa;
+    --danger-text: #b91c1c;
+    --danger-border: #fecaca;
+    --border-gray: #ccc;
+    /* Global UI Settings */
+    --border-radius-main: 8px; /* Based on their borderRadius: 8 */
+    --bg-color: #f8fafc; /* A soft off-white for the web background */
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 24px; /* Based on their container padding: 24 */
+}
