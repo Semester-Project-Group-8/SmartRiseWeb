@@ -1,0 +1,39 @@
+.issues-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 600px;
+}
+
+.issue-card {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius-main);
+    background-color: #fff;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.desk-name {
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid var(--border-gray);
+    margin: 0 0 12px 0;
+    width: 100%;
+}
+
+.label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.issue-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--danger-text);
+}

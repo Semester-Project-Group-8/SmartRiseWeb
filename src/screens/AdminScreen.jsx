@@ -26,7 +26,11 @@ function AdminScreen() {
                     <div>Total Desks</div>
                     <div className="summary-number">12</div>
                 </div>
-                <div className="summary-card">
+                <div
+                    className="summary-card"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => navigate('/reports')}
+                >
                     <div>Reported Issues</div>
                     <div className="summary-number">2</div>
                 </div>
