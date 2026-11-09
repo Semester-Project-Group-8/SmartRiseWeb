@@ -1,0 +1,68 @@
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    margin-top: 10px;
+}
+
+.profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: var(--primary-blue-light);
+    color: var(--primary-blue);
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.profile-name {
+    margin: 0 0 4px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.section-title {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.account-card {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--border-radius-main);
+    background-color: #fff;
+    overflow: hidden; /* Keeps the bottom border radius clean */
+}
+
+.account-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-gray);
+    font-size: 15px;
+}
+
+    .account-row.no-border {
+        border-bottom: none;
+    }
+
+.row-label {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.row-value {
+    font-weight: 600;
+    color: #0f172a;
+}

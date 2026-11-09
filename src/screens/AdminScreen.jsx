@@ -9,7 +9,7 @@ function AdminScreen() {
             {/* header area */}
             <header className="header">
                 <h1 className="welcome-text">Admin Dashboard</h1>
-                <button className="profile-button">
+                <button className="profile-button" onClick={() => navigate('/profile')}>
                     <span className="profile-letter">A</span>
                 </button>
             </header>
