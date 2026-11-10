@@ -1,16 +1,24 @@
-# React + Vite
+# SmartRise Web Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the React web application for the SmartRise admin dashboard. It is currently built with a mock API service layer to maintain architectural parity with the mobile application until the backend is fully integrated.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+To run this project locally on your machine, ensure you have [Node.js](https://nodejs.org/) installed, then follow these steps:
 
-## React Compiler
+1. **Install Dependencies**  
+   Open your terminal in the project folder and run:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+   ```bash
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+2. **Start the Development Server** 								 
+	Once the installation is complete, start the local server by running:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+   ```bash
+   npm run dev
+   ```
+
+3. **View the App**
+Open your browser and navigate to http://localhost:5173
