@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 500px; 
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -122,4 +122,70 @@
 .logout-text {
     color: var(--danger-text);
     font-weight: 600;
+}
+
+/* desktop layout update */
+
+body {
+    margin: 0;
+    background-color: #f8fafc;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* sidebar styling */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid var(--border-gray);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 24px;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--primary-blue);
+    border-bottom: 1px solid var(--border-gray);
+    letter-spacing: -0.5px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+}
+
+.nav-link {
+    padding: 14px 24px;
+    text-decoration: none;
+    color: #475569;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    background-color: #f1f5f9;
+    color: var(--primary-blue);
+    border-right: 3px solid var(--primary-blue);
+}
+
+/* content area */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* widen the container so it doesn't look like a phone screen  */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
