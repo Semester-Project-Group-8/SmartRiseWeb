@@ -1,27 +1,21 @@
-﻿import { useNavigate } from 'react-router-dom';
-import './AdminReported.css';
+﻿import './AdminReported.css';
 
 function AdminReported() {
-    const navigate = useNavigate();
-
-    // storing the reported issues in an array for easy mapping
+    // hardcoding 2 issues here so it matches the dashboard summary card
+    // until there are actual issues in backend
     const issues = [
-        { id: 1, deskName: 'Desk 2', issueText: 'Some issue' }
+        { id: 1, deskNum: 2, issueText: "Desk is stuck at 70cm and won't go up." },
+        { id: 2, deskNum: 1, issueText: "Connection dropping intermittently." }
     ];
 
     return (
         <div className="admin-container">
-            {/* back navigation */}
-            <button className="back-button" onClick={() => navigate('/')}>
-                ← Back to Dashboard
-            </button>
-
-            <h2 className="page-title">Currently you have {issues.length} issue reported</h2>
+            <h2 className="page-title">Currently you have {issues.length} issues reported</h2>
 
             <div className="issues-list">
                 {issues.map((issue) => (
                     <div key={issue.id} className="issue-card">
-                        <h3 className="desk-name">{issue.deskName}</h3>
+                        <h3 className="desk-name">Desk {issue.deskNum}</h3>
 
                         <hr className="divider" />
 

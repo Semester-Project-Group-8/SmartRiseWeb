@@ -1,21 +1,30 @@
-﻿import { useNavigate } from 'react-router-dom';
+﻿import { useState, useEffect } from 'react';
+import { getUserById } from '../services/api';
 import './AdminProfile.css';
 
 function AdminProfile() {
-    const navigate = useNavigate();
+    const [adminUser, setAdminUser] = useState(null);
+
+    useEffect(() => {
+        // fetch the admin user
+        const user = getUserById("user-003");
+        setAdminUser(user);
+    }, []);
+
+    // quick loading state while the data fetches
+    if (!adminUser) {
+        return <div className="admin-container">Loading profile...</div>;
+    }
 
     return (
         <div className="admin-container">
-            {/* back navigation */}
-            <button className="back-button" onClick={() => navigate('/')}>
-                ← Back to Dashboard
-            </button>
-
             {/* profile header */}
             <div className="profile-header">
-                <div className="profile-avatar-large">A</div>
-                <h2 className="profile-name">Admin Name</h2>
-                <span className="profile-role">Admin</span>
+                <div className="profile-avatar-large">{adminUser.name.charAt(0)}</div>
+                <h2 className="profile-name">{adminUser.name} {adminUser.surname}</h2>
+                <span className="profile-role">
+                    {adminUser.role.charAt(0).toUpperCase() + adminUser.role.slice(1)}
+                </span>
             </div>
 
             {/* account details table */}
@@ -24,19 +33,19 @@ function AdminProfile() {
                 <div className="account-card">
                     <div className="account-row">
                         <span className="row-label">Name</span>
-                        <span className="row-value">Admin's Name</span>
+                        <span className="row-value">{adminUser.name} {adminUser.surname}</span>
                     </div>
                     <div className="account-row">
-                        <span className="row-label">Preferred Desk</span>
-                        <span className="row-value">Admin's PD</span>
+                        <span className="row-label">Height</span>
+                        <span className="row-value">{adminUser.height ? `${adminUser.height} cm` : 'Not set'}</span>
                     </div>
                     <div className="account-row">
-                        <span className="row-label">Department</span>
-                        <span className="row-value">Admin's Depart.</span>
+                        <span className="row-label">Sit Preset</span>
+                        <span className="row-value">{adminUser.sitPreset ? `${adminUser.sitPreset} cm` : 'Not set'}</span>
                     </div>
                     <div className="account-row no-border">
-                        <span className="row-label">Date Of Birth</span>
-                        <span className="row-value">Admin's DOB</span>
+                        <span className="row-label">Stand Preset</span>
+                        <span className="row-value">{adminUser.standPreset ? `${adminUser.standPreset} cm` : 'Not set'}</span>
                     </div>
                 </div>
             </div>
