@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'; // changed link to NavLink
 import AdminScreen from './screens/AdminScreen';
 import AdminAllDesks from './screens/AdminAllDesks';
 import AdminNewUsers from './screens/AdminNewUsers';
@@ -15,11 +15,41 @@ function App() {
                 <aside className="sidebar">
                     <div className="sidebar-header">SmartRise</div>
                     <nav className="sidebar-nav">
-                        <Link to="/" className="nav-link">Dashboard</Link>
-                        <Link to="/desks" className="nav-link">Manage Desks</Link>
-                        <Link to="/users" className="nav-link">Manage Users</Link>
-                        <Link to="/reports" className="nav-link">Reported Issues</Link>
-                        <Link to="/profile" className="nav-link">Profile Settings</Link>
+                        <NavLink
+                            to="/"
+                            end
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            Dashboard
+                        </NavLink>
+
+                        <NavLink
+                            to="/desks"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            Manage Desks
+                        </NavLink>
+
+                        <NavLink
+                            to="/users"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            Manage Users
+                        </NavLink>
+
+                        <NavLink
+                            to="/reports"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            Reported Issues
+                        </NavLink>
+
+                        <NavLink
+                            to="/profile"
+                            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+                        >
+                            Profile Settings
+                        </NavLink>
                     </nav>
                 </aside>
 

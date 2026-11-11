@@ -189,3 +189,17 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+.menu-item.active {
+    color: #1a73e8;
+    font-weight: 600;
+    background-color: #f4f8ff;
+    border-right: 3px solid #1a73e8;
+}
+
+.nav-link.active {
+    color: #1a73e8 !important; /* Forces the blue to override default link colors */
+    font-weight: 600;
+    background-color: #f4f8ff;
+    border-right: 3px solid #1a73e8;
+}
