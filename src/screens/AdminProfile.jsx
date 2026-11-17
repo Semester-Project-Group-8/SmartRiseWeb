@@ -1,14 +1,22 @@
 ﻿import { useState, useEffect } from 'react';
-import { getUserById } from '../services/api';
+import { getAllUsers } from '../services/api';
 import './AdminProfile.css';
 
 function AdminProfile() {
     const [adminUser, setAdminUser] = useState(null);
 
     useEffect(() => {
-        // fetch the admin user
-        const user = getUserById("user-003");
-        setAdminUser(user);
+        async function loadProfile() {
+            // fetch all users from db
+            const allUsers = await getAllUsers();
+
+            // find first user who has admin role
+            const admin = allUsers.find(u => u.role.toLowerCase() === 'admin');
+
+            // set them as the active profile
+            setAdminUser(admin || allUsers[0]);
+        }
+        loadProfile();
     }, []);
 
     // quick loading state while the data fetches
@@ -18,34 +26,34 @@ function AdminProfile() {
 
     return (
         <div className="admin-container">
-            {/* profile header */}
             <div className="profile-header">
                 <div className="profile-avatar-large">{adminUser.name.charAt(0)}</div>
-                <h2 className="profile-name">{adminUser.name} {adminUser.surname}</h2>
+                <h2 className="profile-name">{adminUser.name}</h2>
                 <span className="profile-role">
-                    {adminUser.role.charAt(0).toUpperCase() + adminUser.role.slice(1)}
+                    {adminUser.role ? adminUser.role.charAt(0).toUpperCase() + adminUser.role.slice(1) : ''}
                 </span>
             </div>
 
-            {/* account details table */}
             <div className="account-section">
                 <h3 className="section-title">Account</h3>
                 <div className="account-card">
                     <div className="account-row">
                         <span className="row-label">Name</span>
-                        <span className="row-value">{adminUser.name} {adminUser.surname}</span>
+                        <span className="row-value">{adminUser.name}</span>
                     </div>
                     <div className="account-row">
                         <span className="row-label">Height</span>
-                        <span className="row-value">{adminUser.height ? `${adminUser.height} cm` : 'Not set'}</span>
+                        <span className="row-value">
+                            {adminUser.desk?.preferredHeight ? `${adminUser.desk.preferredHeight} cm` : 'Not set'}
+                        </span>
                     </div>
                     <div className="account-row">
                         <span className="row-label">Sit Preset</span>
-                        <span className="row-value">{adminUser.sitPreset ? `${adminUser.sitPreset} cm` : 'Not set'}</span>
+                        <span className="row-value">Not set</span>
                     </div>
                     <div className="account-row no-border">
                         <span className="row-label">Stand Preset</span>
-                        <span className="row-value">{adminUser.standPreset ? `${adminUser.standPreset} cm` : 'Not set'}</span>
+                        <span className="row-value">Not set</span>
                     </div>
                 </div>
             </div>

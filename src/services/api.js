@@ -1,93 +1,65 @@
-import { mockUsers, mockDesks, mockPicos } from "./mockData";
+// base url for docker backend
+const BASE_URL = 'http://localhost:8080';
 
-export const getUsers = () => {
-    return mockUsers;
-};
+// desk endpoints
 
-export const getDesks = () => {
-    return mockDesks;
-};
-
-export const getUserById = (id) => {
-    return mockUsers.find(user => user.id === id);
-};
-
-export const getDeskById = (id) => {
-    return mockDesks.find(desk => desk.id === id);
-};
-
-export const setDeskHeight = (height, id) => {
-    const desk = mockDesks.find(desk => desk.id === id);
-    if (!desk) throw new Error(`Desk not found: ${id}`);
-    if (height < 30 || height > 150) throw new Error(`Desk height must be between 30 and 150 cm.`);
-    desk.currentHeight = height;
-};
-
-export const setAllDeskHeights = (height) => {
-    for (const desk of mockDesks) {
-        setDeskHeight(height, desk.id);
+export async function getDesks() {
+    try {
+        const response = await fetch(`${BASE_URL}/api/desks`);
+        if (!response.ok) throw new Error('Failed to fetch desks');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching desks:", error);
+        return [];
     }
-};
+}
 
-export const updatePresets = (userId, presetValue, preset) => {
-    const user = mockUsers.find(user => user.id === userId);
-    if (!user) throw new Error(`User not found: ${userId}`);
-    if (preset < 30 || preset > 150) throw new Error("Preset height must be between 30 and 150 cm.");
-
-    if (presetValue === "sit") {
-        user.sitPreset = preset;
-    } else {
-        user.standPreset = preset;
+export async function getDeskById(deskId) {
+    try {
+        const response = await fetch(`${BASE_URL}/api/desks/${deskId}`);
+        if (!response.ok) throw new Error('Failed to fetch desk');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching desk:", error);
+        return null;
     }
-};
+}
 
-export const approveUser = (id) => {
-    const user = mockUsers.find(user => user.id === id);
-    if (!user) throw new Error(`User not found: ${id}`);
-    user.approval = "approved";
-};
+// user endpoints
 
-export const rejectUser = (id) => {
-    const user = mockUsers.find(user => user.id === id);
-    if (!user) throw new Error(`User not found: ${id}`);
-    user.approval = "rejected";
-};
+export async function getPendingUsers() {
+    try {
+        const response = await fetch(`${BASE_URL}/users/approval-pending`);
+        if (!response.ok) throw new Error('Failed to fetch pending users');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching pending users:", error);
+        return [];
+    }
+}
 
-export const getPendingUsers = () => {
-    const users = getUsers();
-    return users.filter(user => user.approval === "pending");
-};
+export async function getUserById(userId) {
+    try {
+        const response = await fetch(`${BASE_URL}/users/${userId}`);
+        if (!response.ok) throw new Error('Failed to fetch user');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        return null;
+    }
+}
 
-export const assignDesk = (userId, deskId) => {
-    const user = mockUsers.find(user => user.id === userId);
-    const desk = mockDesks.find(desk => desk.id === deskId);
-
-    if (!user) throw new Error(`User not found: ${userId}`);
-    if (!desk) throw new Error(`Desk not found: ${deskId}`);
-    if (desk.assignedUserID !== null) throw new Error("Desk is already assigned.");
-    if (user.assignedDeskID !== null) throw new Error("User already has a desk.");
-
-    user.assignedDeskID = deskId;
-    desk.assignedUserID = userId;
-};
-
-export const unassignDesk = (deskId, userId) => {
-    const desk = mockDesks.find(desk => desk.id === deskId);
-    const user = mockUsers.find(user => user.id === userId);
-
-    if (!user) throw new Error(`User not found: ${userId}`);
-    if (!desk) throw new Error(`Desk not found: ${deskId}`);
-    if (desk.assignedUserID !== userId) throw new Error("This desk is not assigned to this user.");
-    if (user.assignedDeskID !== deskId) throw new Error("This user is not assigned to this desk.");
-
-    desk.assignedUserID = null;
-    user.assignedDeskID = null;
-};
-
-export const getPicos = () => {
-    return mockPicos;
-};
-
-export const getPicoById = (id) => {
-    return mockPicos.find((pico) => pico.id === id);
-};
+// fetch all users for admin view
+// this is used as admin login was skipped
+// but we need to log in as admin
+// todo: remove this once admin login is implemented
+export async function getAllUsers() {
+    try {
+        const response = await fetch(`${BASE_URL}/users`);
+        if (!response.ok) throw new Error('Failed to fetch users');
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
+    }
+}

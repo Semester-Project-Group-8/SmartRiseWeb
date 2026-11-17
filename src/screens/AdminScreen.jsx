@@ -11,11 +11,15 @@ function AdminScreen() {
 
     // fetch the data when the dashboard loads
     useEffect(() => {
-        const desks = getDesks();
-        const pending = getPendingUsers();
+        async function loadDashboard() {
+            const desks = await getDesks();
+            const pending = await getPendingUsers();
 
-        setTotalDesks(desks.length);
-        setPendingUsersCount(pending.length);
+            setTotalDesks(desks.length);
+            setPendingUsersCount(pending.length);
+        }
+
+        loadDashboard();
     }, []);
 
     return (

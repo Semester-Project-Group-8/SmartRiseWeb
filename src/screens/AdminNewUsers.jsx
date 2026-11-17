@@ -8,11 +8,25 @@ const roles = ['User', 'Cleaner', 'Admin'];
 function AdminNewUsers() {
     const navigate = useNavigate();
     const [pendingUsers, setPendingUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // fetch the pending users when the screen loads
-        setPendingUsers(getPendingUsers());
+        async function loadPendingUsers() {
+            setIsLoading(true);
+            const users = await getPendingUsers();
+            setPendingUsers(users);
+            setIsLoading(false);
+        }
+        loadPendingUsers();
     }, []);
+
+    if (isLoading) {
+        return (
+            <div className="admin-container">
+                <h2 className="page-title">Loading requests...</h2>
+            </div>
+        );
+    }
 
     return (
         <div className="admin-container">
@@ -26,23 +40,25 @@ function AdminNewUsers() {
     );
 }
 
-// ppass the specific user data into each card
+// pass the specific user data into each card
 function RequestCard({ user }) {
     const [role, setRole] = useState('');
     const [availableDesks, setAvailableDesks] = useState([]);
 
     useEffect(() => {
-        // only get desks that aren't assigned to anyone yet
-        const allDesks = getDesks();
-        const unassigned = allDesks.filter(desk => desk.assignedUserID === null);
-        setAvailableDesks(unassigned);
+        async function loadAvailableDesks() {
+            const allDesks = await getDesks();
+            const unassigned = allDesks.filter(desk => desk.employeeId === null);
+            setAvailableDesks(unassigned);
+        }
+        loadAvailableDesks();
     }, []);
 
     return (
         <div className="request-card">
             <div className="user-info-row">
                 <div className="profile-logo">{user.name.charAt(0)}</div>
-                <div className="user-name">{user.name} {user.surname}</div>
+                <div className="user-name">{user.name}</div>
             </div>
 
             <hr className="divider" />
@@ -67,7 +83,7 @@ function RequestCard({ user }) {
                         {availableDesks.length > 0 ? (
                             availableDesks.map((desk) => (
                                 <button key={desk.id} className="desk-select-button">
-                                    Desk {desk.deskNum}
+                                    Desk {desk.minor}
                                 </button>
                             ))
                         ) : (
