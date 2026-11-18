@@ -7,10 +7,46 @@ function AdminAllDesks() {
     const navigate = useNavigate();
     const [desks, setDesks] = useState([]);
 
+    // store our fetched users
+    const [usersMap, setUsersMap] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        const fetchedDesks = getDesks();
-        setDesks(fetchedDesks);
+        async function loadData() {
+            setIsLoading(true);
+
+            // fetch desks 
+            const fetchedDesks = await getDesks();
+            setDesks(fetchedDesks);
+
+            // fetch the user for each assigned desk in advance
+            const userDictionary = {};
+            for (const desk of fetchedDesks) {
+                if (desk.employeeId) {
+                    // fetch if havent already
+                    if (!userDictionary[desk.employeeId]) {
+                        const user = await getUserById(desk.employeeId);
+                        userDictionary[desk.employeeId] = user;
+                    }
+                }
+            }
+
+            // save users and stop loading
+            setUsersMap(userDictionary);
+            setIsLoading(false);
+        }
+
+        loadData();
     }, []);
+
+    // show loading state while fetching from the database
+    if (isLoading) {
+        return (
+            <div className="admin-container">
+                <h2 className="page-title">Loading desks from database...</h2>
+            </div>
+        );
+    }
 
     return (
         <div className="admin-container">
@@ -18,11 +54,11 @@ function AdminAllDesks() {
 
             <div className="desks-grid">
                 {desks.map((desk) => {
-                    const assignedUser = desk.assignedUserID ? getUserById(desk.assignedUserID) : null;
+                    const assignedUser = desk.employeeId ? usersMap[desk.employeeId] : null;
 
                     return (
                         <div key={desk.id} className="desk-card">
-                            <h3 className="desk-name">Desk {desk.deskNum}</h3>
+                            <h3 className="desk-name">Desk {desk.minor}</h3>
 
                             <hr className="divider" />
 
@@ -32,7 +68,7 @@ function AdminAllDesks() {
                                     {assignedUser ? assignedUser.name.charAt(0) : '?'}
                                 </div>
                                 <div className="user-name">
-                                    {assignedUser ? `${assignedUser.name} ${assignedUser.surname}` : 'Unassigned'}
+                                    {assignedUser ? assignedUser.name : 'Unassigned'}
                                 </div>
                             </div>
 
