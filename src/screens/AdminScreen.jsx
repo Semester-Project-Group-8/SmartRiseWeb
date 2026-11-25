@@ -62,10 +62,6 @@ function AdminScreen() {
             <button className="lift-button">
                 <span className="lift-text">Lift All Desks</span>
             </button>
-
-            <button className="logout-button">
-                <span className="logout-text">Logout</span>
-            </button>
         </div>
     );
 }
