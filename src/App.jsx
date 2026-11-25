@@ -10,7 +10,7 @@ import AdminProfile from './screens/AdminProfile';
 import './App.css';
 
 function App() {
-    const { token } = useContext(AuthContext);
+    const { token, logout } = useContext(AuthContext);
 
     return (
         <BrowserRouter>
@@ -62,7 +62,14 @@ function App() {
                             >
                                 Profile Settings
                             </NavLink>
-                        </nav>
+                            </nav>
+                            <button
+                                className="logout-button"
+                                onClick={logout}
+                                style={{ marginTop: 'auto' }}
+                            >
+                                <span className="logout-text">Logout</span>
+                            </button>
                     </aside>
 
                     {/* main content area */}
