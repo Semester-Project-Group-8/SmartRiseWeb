@@ -1,9 +1,9 @@
 ﻿import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPendingUsers, getDesks } from '../services/api';
+import { getPendingUsers, getDesks, getDepartments, approveUser, rejectUser } from '../services/api';
 import './AdminNewUsers.css';
 
-const roles = ['User', 'Cleaner', 'Admin'];
+const roles = ['Employee', 'Cleaner', 'Admin'];
 
 function AdminNewUsers() {
     const navigate = useNavigate();
@@ -44,16 +44,89 @@ function AdminNewUsers() {
 function RequestCard({ user }) {
     const [role, setRole] = useState('');
     const [availableDesks, setAvailableDesks] = useState([]);
-
+    const [selectedDesk, setSelectedDesk] = useState(null);
+    const [selectedDepartments, setSelectedDepartments] = useState([]);
+    const [availableDepartments, setAvailableDepartments] = useState([]);
     useEffect(() => {
-        async function loadAvailableDesks() {
+        async function loadData() {
+
             const allDesks = await getDesks();
-            const unassigned = allDesks.filter(desk => desk.employeeId === null);
+            const unassigned = allDesks.filter(
+                desk => desk.employeeId === null
+            );
             setAvailableDesks(unassigned);
+
+            const allDepartments = await getDepartments();
+
+            setAvailableDepartments(allDepartments)
         }
-        loadAvailableDesks();
+
+        loadData();
     }, []);
 
+    function toggleDepartment(departmentId) {
+        setSelectedDepartments(current => {
+
+            if (current.includes(departmentId)) {
+                return current.filter(id => id !== departmentId);
+            }
+
+            return [...current, departmentId];
+        });
+    }
+    async function handleReject() {
+        const result = await rejectUser(user.id);
+
+        if (result) {
+            window.location.reload();
+        }
+    }
+    async function handleAccept() {
+        let approvalData;
+        if (role === 'employee') {
+            approvalData = {
+                role: 'default',
+                deskId: selectedDesk
+            };
+        }
+        else if (role === 'cleaner') {
+            if (selectedDepartments.length === 0) {
+                alert("Select at least one department");
+                return;
+            }
+
+            approvalData = {
+                role: 'cleaner',
+                departmentIds: selectedDepartments
+            };
+        }
+        else if (role === 'admin') {
+            if (selectedDepartments.length === 0) {
+                alert("Select at least one department");
+                return;
+            }
+
+            approvalData = {
+                role: 'admin',
+                departmentIds: selectedDepartments
+            };
+        }
+        else {
+            alert("Select a role");
+            return;
+        }
+
+        const result = await approveUser(user.id, approvalData);
+        if (result) {
+            window.location.reload();
+        }
+    }
+    const displayedDepartments =
+        role === 'admin'
+            ? availableDepartments.filter(
+                department => department.adminId == null
+            )
+            : availableDepartments;
     return (
         <div className="request-card">
             <div className="user-info-row">
@@ -76,14 +149,25 @@ function RequestCard({ user }) {
                 ))}
             </div>
 
-            {role === 'user' && (
+            {role === 'employee' && (
                 <div className="desks-section">
                     <div className="section-label">Assign Desk and Beacon</div>
                     <div className="desks-list">
                         {availableDesks.length > 0 ? (
                             availableDesks.map((desk) => (
-                                <button key={desk.id} className="desk-select-button">
-                                    Desk {desk.minor}
+                                <button
+                                    key={desk.id}
+                                    className={`desk-select-button ${selectedDesk === desk.id ? 'selected' : ''
+                                        }`}
+                                    onClick={() => setSelectedDesk(desk.id)}
+                                >
+                                    <div className="desk-title">
+                                        Desk - {desk.id}
+                                    </div>
+
+                                    <div className="desk-details">
+                                        Department: {desk.department?.major} • Cluster: {desk.minor}
+                                    </div>
                                 </button>
                             ))
                         ) : (
@@ -93,12 +177,45 @@ function RequestCard({ user }) {
                 </div>
             )}
 
+            {(role === 'cleaner' || role === 'admin') && (
+                <div className="desks-section">
+                    <div className="section-label">
+                        Assign Departments
+                    </div>
+
+                    <div className="desks-list">
+
+                        {displayedDepartments.map((department) => (
+                            <button
+                                key={department.id}
+                                className={`desk-select-button ${selectedDepartments.includes(department.id)
+                                    ? 'selected'
+                                    : ''
+                                    }`}
+                                onClick={() => toggleDepartment(department.id)}
+                            >
+                                <div className="desk-title">
+                                    Department {department.major}
+                                </div>
+
+                                <div className="desk-details">
+                                    Start: {department.startTime}
+                                    {' • '}
+                                    End: {department.endTime}
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <div className="action-row">
-                <button className="accept-button">Accept</button>
-                <button className="reject-button">Reject</button>
+                <button className="accept-button" onClick={handleAccept}>Accept</button>
+                <button className="reject-button" onClick={handleReject}>Reject</button>
             </div>
         </div>
     );
 }
+
 
 export default AdminNewUsers;

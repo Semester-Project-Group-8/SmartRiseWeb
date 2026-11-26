@@ -57,6 +57,74 @@ export async function getUserById(userId) {
     }
 }
 
+export async function approveUser(id, approvalData)
+{
+    try
+    {
+        const response = await fetch(`${BASE_URL}/users/${id}/approve`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(approvalData)
+            }
+        )
+        if (!response.ok)
+        {
+            const error = await response.json();
+            throw new Error(error.message || error.Message);
+        }
+        return await response.json();
+    }
+    catch (error)
+    {
+        console.error("Error approving user:", error);
+        return null;
+    }
+}
+
+export async function getDepartments() {
+    try {
+        const response = await fetch(
+            `${BASE_URL}/departments`
+        );
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch departments');
+        }
+
+        return await response.json();
+    }
+    catch (error) {
+        console.error('Error fetching departments:', error);
+        return [];
+    }
+}
+
+export async function rejectUser(id) {
+    try {
+        const response = await fetch(
+            `${BASE_URL}/users/${id}/reject`,
+            {
+                method: 'PATCH',
+                headers: getAuthHeaders()
+            }
+        );
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || error.Message);
+        }
+
+        return await response.json();
+    }
+    catch (error) {
+        console.error("Error rejecting user:", error);
+        return null;
+    }
+}
+
 // fetch all users for admin view
 // this is used as admin login was skipped
 // but we need to log in as admin
